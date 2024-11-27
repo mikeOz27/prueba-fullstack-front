@@ -29,16 +29,14 @@ const Sedes = ({token, userAuth, onLogout}) => {
 
   // Aquí va la URL de tu API de localización de sedes
     useEffect(() => {
+        const api_key = btoa("Y2FORUpSMmk0YjkyS2ZqM3QweFRrTUxrTUNSeHlEcERnOTRPY2FORUpSMmk0YjkyS2ZqM3QweFRrTUxrTUNSeHlEcERnOTRP"); // Incluye la clave en el header
         let isMounted = true;
         const GetRole = async () => {
             try {
-                console.log('API Key:', process.env.REACT_APP_API_KEY);
-                const response = await api.post('/get_location', {
-                    // key: "Y2FORUpSMmk0YjkyS2ZqM3QweFRrTUxrTUNSeHlEcERnOTRPY2FORUpSMmk0YjkyS2ZqM3QweFRrTUxrTUNSeHlEcERnOTRP", // Incluye la clave en el cuerpo
-                }, {
+                const response = await api.get('/get_location',{
                     headers: {
                         Authorization: `Bearer ${token}`,
-                        key: "Y2FORUpSMmk0YjkyS2ZqM3QweFRrTUxrTUNSeHlEcERnOTRPY2FORUpSMmk0YjkyS2ZqM3QweFRrTUxrTUNSeHlEcERnOTRP", // Incluye la clave en el cuerpo
+                        Api_key_authorized: api_key
                     }
                 });
 
@@ -67,7 +65,9 @@ const Sedes = ({token, userAuth, onLogout}) => {
     }
 
     if (error) {
-        return <p>{error}</p>;
+        <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+            <Typography variant="h6">{error}</Typography>
+        </Container>
     }
 
     return (
