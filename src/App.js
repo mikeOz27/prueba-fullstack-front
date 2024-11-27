@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import './App.css';
+import './App.css'; // Solo el CSS necesario
 import Sede from './components/Sede';
 import Login from './components/Login';
+
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem('token')); // Se obtiene el token del localStorage

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import api from '../api/axios';
+// import api from '../api/axios';
 import { Container, Typography, Avatar } from '@mui/material';
 import Button from '@mui/material/Button';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination } from '@mui/material';
@@ -28,32 +28,42 @@ const Sedes = ({token, userAuth, onLogout}) => {
 
 
   // Aquí va la URL de tu API de localización de sedes
-    useEffect(() => {
-        const api_key = btoa("Y2FORUpSMmk0YjkyS2ZqM3QweFRrTUxrTUNSeHlEcERnOTRPY2FORUpSMmk0YjkyS2ZqM3QweFRrTUxrTUNSeHlEcERnOTRP"); // Incluye la clave en el header
-        let isMounted = true;
-        const GetRole = async () => {
-            try {
-                const response = await api.get('/get_location',{
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        Api_key_authorized: api_key
-                    }
-                });
+    // useEffect(() => {
+    //     const api_key = btoa("Y2FORUpSMmk0YjkyS2ZqM3QweFRrTUxrTUNSeHlEcERnOTRPY2FORUpSMmk0YjkyS2ZqM3QweFRrTUxrTUNSeHlEcERnOTRP"); // Incluye la clave en el header
+    //     let isMounted = true;
+    //     const GetRole = async () => {
+    //         try {
+    //             const response = await api.get('/get_location',{
+    //                 headers: {
+    //                     Authorization: `Bearer ${token}`,
+    //                     Api_key_authorized: api_key
+    //                 }
+    //             });
 
-                if (isMounted) {
-                    const fetchedSedes = response.data.status.data
-                        .map(sede => ({ ...sede }));
-                    setSedes(fetchedSedes);
-                }
-            } catch (error) {
-                setError('Error al obtener los sedes');
-                console.error('Error al obtener los sedes:', error);
-            }
-        };
-        GetRole();
-        return () => {
-            isMounted = false;
-        };
+    //             if (isMounted) {
+    //                 const fetchedSedes = response.data.status.data
+    //                     .map(sede => ({ ...sede }));
+    //                 setSedes(fetchedSedes);
+    //             }
+    //         } catch (error) {
+    //             setError('Error al obtener los sedes');
+    //             console.error('Error al obtener los sedes:', error);
+    //         }
+    //     };
+    //     GetRole();
+    //     return () => {
+    //         isMounted = false;
+    //     };
+    // }, []);
+
+    useEffect(() => {
+        const fakeSedes = [
+            { id: 1, image: 'https://via.placeholder.com/150', name: 'Sede A', code: 'A001' },
+            { id: 2, image: 'https://via.placeholder.com/150', name: 'Sede B', code: 'B002' },
+            { id: 3, image: 'https://via.placeholder.com/150', name: 'Sede C', code: 'C003' },
+        ];
+        setSedes(fakeSedes);
+        setLoading(false);
     }, []);
 
     if (loading) {
