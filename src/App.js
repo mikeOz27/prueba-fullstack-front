@@ -5,8 +5,8 @@ import Sede from './components/Sede';
 import Login from './components/Login';
 
 function App() {
-  const [token, setToken] = useState(localStorage.getItem('token'));
-  const [userAuth, setUser] = useState(JSON.parse(localStorage.getItem('userAuth')));
+  const [token, setToken] = useState(localStorage.getItem('token')); // Se obtiene el token del localStorage
+  const [userAuth, setUser] = useState(JSON.parse(localStorage.getItem('userAuth'))); // Se obtiene el usuario autenticado del localStorage
 
   const handleLogout = () => {
     localStorage.removeItem('token');

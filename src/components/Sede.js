@@ -4,7 +4,7 @@ import { Container, Typography, Avatar } from '@mui/material';
 import Button from '@mui/material/Button';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination } from '@mui/material';
 
-const Sedes = ({token, onLogout}) => {
+const Sedes = ({token, userAuth, onLogout}) => {
     const [sedes, setSedes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -34,21 +34,22 @@ const Sedes = ({token, onLogout}) => {
             try {
                 console.log('API Key:', process.env.REACT_APP_API_KEY);
                 const response = await api.post('/get_location', {
-                    key: "Y2FORUpSMmk0YjkyS2ZqM3QweFRrTUxrTUNSeHlEcERnOTRPY2FORUpSMmk0YjkyS2ZqM3QweFRrTUxrTUNSeHlEcERnOTRP", // Incluye la clave en el cuerpo
+                    // key: "Y2FORUpSMmk0YjkyS2ZqM3QweFRrTUxrTUNSeHlEcERnOTRPY2FORUpSMmk0YjkyS2ZqM3QweFRrTUxrTUNSeHlEcERnOTRP", // Incluye la clave en el cuerpo
                 }, {
                     headers: {
-                        Authorization: `Bearer ${token}`
+                        Authorization: `Bearer ${token}`,
+                        key: "Y2FORUpSMmk0YjkyS2ZqM3QweFRrTUxrTUNSeHlEcERnOTRPY2FORUpSMmk0YjkyS2ZqM3QweFRrTUxrTUNSeHlEcERnOTRP", // Incluye la clave en el cuerpo
                     }
                 });
 
                 if (isMounted) {
-                    const fetchedRoles = response.data.status.data
+                    const fetchedSedes = response.data.status.data
                         .map(sede => ({ ...sede }));
-                    setSedes(fetchedRoles);
+                    setSedes(fetchedSedes);
                 }
             } catch (error) {
-                setError('Error al obtener los roles');
-                console.error('Error al obtener los roles:', error);
+                setError('Error al obtener los sedes');
+                console.error('Error al obtener los sedes:', error);
             }
         };
         GetRole();
@@ -75,7 +76,7 @@ const Sedes = ({token, onLogout}) => {
         Bienvenido a la Plataforma de Localización de Sedes
     </Typography>
         <Button onClick={onLogout} variant="contained" color="primary" style={{ marginBottom: '2rem' }}>
-        Logout 🗝️
+        Logout - {userAuth.name} 🗝️
     </Button>
     <Typography variant="h5" gutterBottom>
         Localización de Sedes
