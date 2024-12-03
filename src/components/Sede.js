@@ -3,6 +3,7 @@ import api from '../api/axios';
 import { Container, Typography, Avatar } from '@mui/material';
 import Button from '@mui/material/Button';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination } from '@mui/material';
+import { Card, CardContent, CardMedia, Grid } from '@mui/material';
 
 const Sedes = ({token, userAuth, onLogout}) => {
     const [sedes, setSedes] = useState([]);
@@ -71,48 +72,56 @@ const Sedes = ({token, userAuth, onLogout}) => {
     }
 
     return (
-    <Container>
-        <Typography variant="h4" gutterBottom style={{ marginTop: '2rem' }}>
-        Bienvenido a la Plataforma de Localización de Sedes
-    </Typography>
-        <Button onClick={onLogout} variant="contained" color="primary" style={{ marginBottom: '2rem' }}>
-        Logout - {userAuth.name} 🗝️
-    </Button>
-    <Typography variant="h5" gutterBottom>
-        Localización de Sedes
-    </Typography>
-        <TableContainer component={Paper} style={{ marginTop: '1rem' }}>
-        <Table>
-            <TableHead>
-                <TableRow>
-                    <TableCell>Imagen</TableCell>
-                    <TableCell>Nombre</TableCell>
-                    <TableCell>Código</TableCell>
-                </TableRow>
-            </TableHead>
-            <TableBody>
+        <Container>
+            <Typography variant="h4" gutterBottom style={{ marginTop: '2rem' }}>
+            Bienvenido a la Plataforma de Localización de Sedes
+            </Typography>
+                <Button onClick={onLogout} variant="contained" color="primary" style={{ marginBottom: '2rem' }}>
+                Logout - {userAuth.name} 🗝️
+            </Button>
+            <Typography variant="h5" gutterBottom>
+                Localización de Sedes
+            </Typography>
+            <Grid container spacing={3} style={{ marginTop: '2rem' }}>
                 {sedes.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((sede) => (
-                    <TableRow key={sede.id}>
-                        <TableCell>
-                            <Avatar src={sede.image} alt={sede.name} />
-                        </TableCell>
-                        <TableCell>{sede.name}</TableCell>
-                        <TableCell>{sede.code}</TableCell>
-                    </TableRow>
+                    <Grid item xs={12} sm={6} md={4} key={sede.id}>
+                        <Card
+                            sx={{
+                                '&:hover': {
+                                    transform: 'scale(1.05)',
+                                    transition: 'transform 0.3s ease-in-out',
+                                },
+                            }}
+                        >
+                            <CardMedia
+                                component="img"
+                                alt={sede.name}
+                                height="140"
+                                image={sede.image}
+                            />
+                            <CardContent>
+                                <Typography gutterBottom variant="h5" component="div">
+                                    {sede.name}
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary">
+                                    Código: {sede.code}
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary">
+                                    Fecha de Creación: {sede.created_at}
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </Grid>
                 ))}
-            </TableBody>
-        </Table>
-    </TableContainer>
-    <TablePagination
-        rowsPerPageOptions={[5, 10, 25]}
-        component="div"
-        count={sedes.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-            style={{ marginTop: '1rem' }}
-    />
+            </Grid>
+            <TablePagination
+                component="div"
+                count={sedes.length}
+                page={page}
+                onPageChange={handleChangePage}
+                rowsPerPage={rowsPerPage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+            />
     </Container>
     );
 
