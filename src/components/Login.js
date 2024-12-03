@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import api from "../api/axios";
+import React, { useState } from 'react';
+import api from '../api/axios';
 import {
   Container,
   Card,
@@ -9,38 +9,38 @@ import {
   Checkbox,
   Button,
   Box,
-} from "@mui/material";
+} from '@mui/material';
 
 const Login = ({ setToken, setUser }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await api.post("login", { email, password });
-      console.log("response", response);
+      const response = await api.post('login', { email, password });
+      console.log('response', response);
       const token = response.data.status.token;
       const userAuth = response.data.status.user;
 
-      localStorage.setItem("token", token);
-      localStorage.setItem("userAuth", JSON.stringify(userAuth));
-      console.log("response", response);
+      localStorage.setItem('token', token);
+      localStorage.setItem('userAuth', JSON.stringify(userAuth));
+      console.log('response', response);
       if (response.data.status.code == 400) {
-        console.log("Error al iniciar sesión", response.data);
-        localStorage.removeItem("token"); // Limpiar el token en caso de error
-        localStorage.removeItem("userAuth"); // Limpiar el usuario autenticado en caso de error
-        setErrorMessage("Error al iniciar sesión. Verifique sus credenciales.");
+        console.log('Error al iniciar sesión', response.data);
+        localStorage.removeItem('token'); // Limpiar el token en caso de error
+        localStorage.removeItem('userAuth'); // Limpiar el usuario autenticado en caso de error
+        setErrorMessage('Error al iniciar sesión. Verifique sus credenciales.');
         return;
       }
       setToken(token);
       setUser(userAuth);
-      setErrorMessage(""); // Limpiar el mensaje de error en caso de éxito
+      setErrorMessage(''); // Limpiar el mensaje de error en caso de éxito
     } catch (error) {
-      console.error("Error al iniciar sesión", error);
-      localStorage.removeItem("token"); // Limpiar el token en caso de error
-      localStorage.removeItem("userAuth"); // Limpiar el usuario autenticado en caso de error
+      console.error('Error al iniciar sesión', error);
+      localStorage.removeItem('token'); // Limpiar el token en caso de error
+      localStorage.removeItem('userAuth'); // Limpiar el usuario autenticado en caso de error
 
       if (
         error.response &&
@@ -49,7 +49,7 @@ const Login = ({ setToken, setUser }) => {
       ) {
         setErrorMessage(error.response.data.message);
       } else {
-        setErrorMessage("Error al iniciar sesión. Verifique sus credenciales.");
+        setErrorMessage('Error al iniciar sesión. Verifique sus credenciales.');
       }
     }
   };
@@ -60,18 +60,18 @@ const Login = ({ setToken, setUser }) => {
       className="p-4"
       sx={{
         background:
-          "radial-gradient(circle, rgba(218, 81%, 95%) 0%, rgba(218, 81%, 75%) 100%)",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: "100vh",
+          'radial-gradient(circle, rgba(218, 81%, 95%) 0%, rgba(218, 81%, 75%) 100%)',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh',
       }}
     >
       <Card
         sx={{
-          width: "100%",
+          width: '100%',
           maxWidth: 400,
-          bgcolor: "rgba(255, 255, 255, 0.9)",
+          bgcolor: 'rgba(255, 255, 255, 0.9)',
           boxShadow: 3,
         }}
       >
@@ -121,7 +121,7 @@ const Login = ({ setToken, setUser }) => {
               fullWidth
               variant="contained"
               color="primary"
-              sx={{ padding: "10px" }}
+              sx={{ padding: '10px' }}
             >
               Login
             </Button>
