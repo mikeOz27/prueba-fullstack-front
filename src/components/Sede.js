@@ -82,14 +82,16 @@ const Sedes = ({token, userAuth, onLogout}) => {
             <Typography variant="h5" gutterBottom>
                 Localización de Sedes
             </Typography>
+
+            {/* VISTA PARA CARD */}
             <Grid container spacing={3} style={{ marginTop: '2rem' }}>
                 {sedes.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((sede) => (
                     <Grid item xs={12} sm={6} md={4} key={sede.id}>
                         <Card
                             sx={{
+                                transition: 'transform 0.3s',
                                 '&:hover': {
                                     transform: 'scale(1.05)',
-                                    transition: 'transform 0.3s ease-in-out',
                                 },
                             }}
                         >
