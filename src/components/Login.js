@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import api from '../api/axios';
+import PropTypes from 'prop-types';
 import {
   Container,
   Card,
@@ -21,12 +22,6 @@ const Login = ({ setToken, setUser }) => {
     try {
       const response = await api.post('login', { email, password });
       console.log('response', response);
-      const token = response.data.status.token;
-      const userAuth = response.data.status.user;
-
-      localStorage.setItem('token', token);
-      localStorage.setItem('userAuth', JSON.stringify(userAuth));
-      console.log('response', response);
       if (response.data.status.code == 400) {
         console.log('Error al iniciar sesión', response.data);
         localStorage.removeItem('token'); // Limpiar el token en caso de error
@@ -34,6 +29,12 @@ const Login = ({ setToken, setUser }) => {
         setErrorMessage('Error al iniciar sesión. Verifique sus credenciales.');
         return;
       }
+
+      const token = response.data.status.token;
+      const userAuth = response.data.status.user;
+
+      localStorage.setItem('token', token);
+      localStorage.setItem('userAuth', JSON.stringify(userAuth));
       setToken(token);
       setUser(userAuth);
       setErrorMessage(''); // Limpiar el mensaje de error en caso de éxito
@@ -131,4 +132,9 @@ const Login = ({ setToken, setUser }) => {
     </Container>
   );
 };
+Login.propTypes = {
+  setToken: PropTypes.func.isRequired,
+  setUser: PropTypes.func.isRequired,
+};
+
 export default Login;

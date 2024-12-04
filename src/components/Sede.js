@@ -60,6 +60,7 @@ const Sedes = ({ token, userAuth, onLogout }) => {
       } catch (error) {
         setError('Error al obtener los sedes');
         console.error('Error al obtener los sedes:', error);
+        // redirectToLogin();
       }
     };
     GetRole();
