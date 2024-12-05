@@ -42,7 +42,7 @@ const Sedes = ({ token, userAuth, onLogout }) => {
       'Y2FORUpSMmk0YjkyS2ZqM3QweFRrTUxrTUNSeHlEcERnOTRPY2FORUpSMmk0YjkyS2ZqM3QweFRrTUxrTUNSeHlEcERnOTRP'
     ); // Incluye la clave en el header
     let isMounted = true;
-    const GetRole = async () => {
+    const GetSede = async () => {
       try {
         const response = await api.get('/get_location', {
           headers: {
@@ -63,7 +63,7 @@ const Sedes = ({ token, userAuth, onLogout }) => {
         // redirectToLogin();
       }
     };
-    GetRole();
+    GetSede();
     return () => {
       isMounted = false;
     };
