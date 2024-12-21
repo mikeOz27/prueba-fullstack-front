@@ -22,7 +22,7 @@ const Login = ({ setToken, setUser }) => {
     try {
       const response = await api.post('login', { email, password });
       console.log('response', response);
-      if (response.data.status.code == 400) {
+      if (response.data.status.code === 400) {
         console.log('Error al iniciar sesión', response.data);
         localStorage.removeItem('token'); // Limpiar el token en caso de error
         localStorage.removeItem('userAuth'); // Limpiar el usuario autenticado en caso de error
