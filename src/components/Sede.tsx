@@ -73,7 +73,7 @@ const Sedes = ({ token, userAuth, onLogout } : SedesProps) => {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [token]);
 
   if (loading) {
     return (
