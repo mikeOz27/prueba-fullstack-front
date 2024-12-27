@@ -1,20 +1,50 @@
-# Getting Started with Create React App
+# React + TypeScript + Vite
 
-En el directorio del proyecto:
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-### 1. `npm install`
+Currently, two official plugins are available:
 
-### 2. `npm start`
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-### 3. Comprobar que el proyecto de la Api en Laravel este corriendo en alguna de las dos url:
+## Expanding the ESLint configuration
 
-    http://localhost:8000
-    http://127.0.0.1:8000
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-Si en alguno de los link la pagina no carga, es porque el proyecto de Laravel, no esta corriendo adecuadamnete.
+- Configure the top-level `parserOptions` property like this:
 
-Para hacer pruebas de test, es en la rama test, porque en la rama main, depende de la api en laravel, que conecta con una db al hacer la migracion:
+```js
+export default tseslint.config({
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+})
+```
 
-### 1. `git checkout test`
+- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
+- Optionally add `...tseslint.configs.stylisticTypeChecked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
 
-### 2. `npm test`
+```js
+// eslint.config.js
+import react from 'eslint-plugin-react'
+
+export default tseslint.config({
+  // Set the react version
+  settings: { react: { version: '18.3' } },
+  plugins: {
+    // Add the react plugin
+    react,
+  },
+  rules: {
+    // other rules...
+    // Enable its recommended rules
+    ...react.configs.recommended.rules,
+    ...react.configs['jsx-runtime'].rules,
+  },
+})
+```

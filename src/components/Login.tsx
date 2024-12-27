@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import api from '../api/axios';
-import PropTypes from 'prop-types';
+import { useState } from "react";
+import api from "../service/urlApi";
 import {
   Container,
   Card,
@@ -10,69 +9,81 @@ import {
   Checkbox,
   Button,
   Box,
-} from '@mui/material';
+} from "@mui/material";
 
-const Login = ({ setToken, setUser }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+interface LoginProps {
+    setToken: (token: string) => void;
+    setUser: (user: string ) => void;
+}
 
-  const handleSubmit = async (e) => {
+const Login = ({ setToken, setUser }: LoginProps) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await api.post('login', { email, password });
-      console.log('response', response);
+      const response = await api.post("login", { email, password });
+      console.log("response", response);
       if (response.data.status.code === 400) {
-        console.log('Error al iniciar sesión', response.data);
-        localStorage.removeItem('token'); // Limpiar el token en caso de error
-        localStorage.removeItem('userAuth'); // Limpiar el usuario autenticado en caso de error
-        setErrorMessage('Error al iniciar sesión. Verifique sus credenciales.');
+        console.log("Error al iniciar sesión", response.data);
+        localStorage.removeItem("token"); // Limpiar el token en caso de error
+        localStorage.removeItem("userAuth"); // Limpiar el usuario autenticado en caso de error
+        setErrorMessage("Error al iniciar sesión. Verifique sus credenciales.");
         return;
       }
 
       const token = response.data.status.token;
       const userAuth = response.data.status.user;
 
-      localStorage.setItem('token', token);
-      localStorage.setItem('userAuth', JSON.stringify(userAuth));
+      localStorage.setItem("token", token);
+      localStorage.setItem("userAuth", JSON.stringify(userAuth));
       setToken(token);
       setUser(userAuth);
-      setErrorMessage(''); // Limpiar el mensaje de error en caso de éxito
+      setErrorMessage(""); // Limpiar el mensaje de error en caso de éxito
     } catch (error) {
-      console.error('Error al iniciar sesión', error);
-      localStorage.removeItem('token'); // Limpiar el token en caso de error
-      localStorage.removeItem('userAuth'); // Limpiar el usuario autenticado en caso de error
+      console.error("Error al iniciar sesión", error);
+      localStorage.removeItem("token"); // Limpiar el token en caso de error
+      localStorage.removeItem("userAuth"); // Limpiar el usuario autenticado en caso de error
+
+      interface ErrorResponse {
+        response: {
+          data: {
+            message: string;
+          };
+        };
+      }
 
       if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
+        (error as ErrorResponse).response &&
+        (error as ErrorResponse).response.data &&
+        (error as ErrorResponse).response.data.message
       ) {
-        setErrorMessage(error.response.data.message);
+        setErrorMessage((error as ErrorResponse).response.data.message);
       } else {
-        setErrorMessage('Error al iniciar sesión. Verifique sus credenciales.');
+        setErrorMessage("Error al iniciar sesión. Verifique sus credenciales.");
       }
     }
   };
 
   return (
     <Container
-      fluid
       className="p-4"
       sx={{
         background:
-          'radial-gradient(circle, rgba(218, 81%, 95%) 0%, rgba(218, 81%, 75%) 100%)',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        minHeight: '100vh',
+          "radial-gradient(circle, rgba(218, 81%, 95%) 0%, rgba(218, 81%, 75%) 100%)",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight: "100vh",
       }}
     >
       <Card
         sx={{
-          width: '100%',
+          width: "100%",
           maxWidth: 400,
-          bgcolor: 'rgba(255, 255, 255, 0.9)',
+          bgcolor: "rgba(255, 255, 255, 0.9)",
           boxShadow: 3,
         }}
       >
@@ -122,7 +133,7 @@ const Login = ({ setToken, setUser }) => {
               fullWidth
               variant="contained"
               color="primary"
-              sx={{ padding: '10px' }}
+              sx={{ padding: "10px" }}
             >
               Login
             </Button>
@@ -131,10 +142,6 @@ const Login = ({ setToken, setUser }) => {
       </Card>
     </Container>
   );
-};
-Login.propTypes = {
-  setToken: PropTypes.func.isRequired,
-  setUser: PropTypes.func.isRequired,
 };
 
 export default Login;

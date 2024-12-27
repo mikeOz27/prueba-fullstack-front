@@ -1,30 +1,24 @@
-import React, { useState } from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-} from 'react-router-dom';
-import './App.css';
-import Sede from './components/Sede';
-import Login from './components/Login';
+import { useState } from "react";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import Sede from "./components/Sede";
+import Login from "./components/Login";
+import "./App.css";
 
 function App() {
-  const [token, setToken] = useState(localStorage.getItem('token')); // Se obtiene el token del localStorage
+  const [token, setToken] = useState(localStorage.getItem("token")); // Se obtiene el token del localStorage
   const [userAuth, setUser] = useState(
-    JSON.parse(localStorage.getItem('userAuth'))
+    JSON.parse(localStorage.getItem("userAuth") || "{}")
   ); // Se obtiene el usuario autenticado del localStorage
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('userAuth');
+    localStorage.removeItem("token");
+    localStorage.removeItem("userAuth");
     setToken(null);
     setUser(null);
   };
-
   return (
     <>
-      <Router>
+      <BrowserRouter>
         <Routes>
           <Route
             path="/login"
@@ -54,7 +48,7 @@ function App() {
             }
           />
         </Routes>
-      </Router>
+      </BrowserRouter>
     </>
   );
 }
