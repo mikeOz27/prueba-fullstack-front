@@ -6,32 +6,32 @@ import { TablePagination, Grid2 } from "@mui/material";
 import { Card, CardContent, CardMedia } from "@mui/material";
 
 // Componente funcional Sedes
-interface SedesProps {
-    token: string;
-    userAuth: {name: string};
-    onLogout: () => void;
-}
+// interface SedesProps {
+//     token: string;
+//     userAuth: {name: string};
+//     onLogout: () => void;
+// }
 
-interface Sede {
-    id: number;
-    name: string;
-    code: string;
-    created_at: string;
-    image: string;
-}
+// interface Sede {
+//     id: number;
+//     name: string;
+//     code: string;
+//     created_at: string;
+//     image: string;
+// }
 
-const Sedes = ({ token, userAuth, onLogout } : SedesProps) => {
+const Sedes = ({ token, userAuth, onLogout }) => {
   const [sedes, setSedes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const handleChangePage = (_event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+  const handleChangePage = () => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
@@ -58,7 +58,7 @@ const Sedes = ({ token, userAuth, onLogout } : SedesProps) => {
         });
 
         if (isMounted) {
-          const fetchedSedes = response.data.status.data.map((sede:Sede) => ({
+          const fetchedSedes = response.data.status.data.map((sede) => ({
             ...sede,
           }));
           setSedes(fetchedSedes);
@@ -66,14 +66,13 @@ const Sedes = ({ token, userAuth, onLogout } : SedesProps) => {
       } catch (error) {
         setError("Error al obtener los sedes");
         console.error("Error al obtener los sedes:", error);
-        // redirectToLogin();
       }
     };
     GetSede();
     return () => {
       isMounted = false;
     };
-  }, [token]);
+  });
 
   if (loading) {
     return (
@@ -124,7 +123,7 @@ const Sedes = ({ token, userAuth, onLogout } : SedesProps) => {
 
       {/* VISTA PARA CARD */}
       <Grid2 container spacing={3} style={{ marginTop: "2rem" }}>
-        {sedes.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((sede:Sede) => (
+        {sedes.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((sede) => (
             <Card sx={{
                 transition: "transform 0.3s",
                 "&:hover": {
