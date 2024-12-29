@@ -6,5 +6,5 @@
 
 # Prueba Test
 
-1. pasarse a la rama test - gir checkout test
+1. pasarse a la rama test - git checkout test
 2. npm test
