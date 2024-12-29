@@ -42,7 +42,6 @@ const Sedes = ({ token, userAuth, onLogout }) => {
     }
   }, [sedes]);
 
-  // Aquí va la URL de tu API de localización de sedes
   useEffect(() => {
     const api_key = btoa(
       "Y2FORUpSMmk0YjkyS2ZqM3QweFRrTUxrTUNSeHlEcERnOTRPY2FORUpSMmk0YjkyS2ZqM3QweFRrTUxrTUNSeHlEcERnOTRP"
